@@ -164,7 +164,6 @@ const SingleChat = () => {
       }
     }, timerLength);
   };
-  console.log("home", notification);
 
   return (
     <>

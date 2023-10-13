@@ -9,6 +9,7 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 const userRouters = require("./routes/userRoutes");
 const cloudinary = require("cloudinary");
+const path = require("path");
 // env.config();
 connectDB();
 app.use(
@@ -27,6 +28,24 @@ app.use(express.json());
 app.use("/api/user", userRouters);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
+
+// --------------------------deployment------------------------------
+
+const __dirname1 = path.resolve();
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "../frontend/build")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running..");
+  });
+}
+
+// --------------------------deployment------------------------------
 
 const PORTt = process.env.PORT || 5000;
 const server = app.listen(PORTt, () => {
@@ -49,14 +68,14 @@ io.on("connection", (socket) => {
 
   socket.on("join chat", (room) => {
     socket.join(room);
-    console.log("User join room" + room);
+    // console.log("User join room" + room);
   });
 
   socket.on("typing", (room) => socket.in(room).emit("typing"));
   socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
 
   socket.on("new message", (newMessageRecieved) => {
-    console.log("newMessageRecieved", newMessageRecieved);
+    // console.log("newMessageRecieved", newMessageRecieved);
     var chat = newMessageRecieved.chat;
 
     if (!chat.users) return console.log("chat.users not defined");
@@ -65,7 +84,7 @@ io.on("connection", (socket) => {
       if (user._id == newMessageRecieved.sender._id) return;
 
       socket.to(user._id).emit("message recieved", newMessageRecieved);
-      console.log("revice dmes", newMessageRecieved);
+      // console.log("revice dmes", newMessageRecieved);
     });
   });
 

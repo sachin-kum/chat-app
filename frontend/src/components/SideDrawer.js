@@ -203,7 +203,6 @@ const SideDrawer = () => {
               <>
                 {searchResult?.users?.length ? (
                   searchResult?.users.map((res) => {
-                    console.log("yrr", res);
                     return (
                       <UserListItem
                         key={res._id}
