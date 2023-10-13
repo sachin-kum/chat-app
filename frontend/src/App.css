@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500&display=swap");
+
+body {
+  font-family: "Montserrat" !important;
+}
+* {
+  font-family: "Montserrat" !important;
+}
+.App {
+  min-height: 100vh;
+
+  background-image: url("./background.jpg");
+  background-position: center;
+  background-size: cover;
+}
+.formContainer {
+  height: 100vh;
+  display: flex;
+  place-items: center;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(136, 136, 136, 0.281);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.chatmsgbox input {
+  color: black !important;
+}
+.sendmsgIcon {
+  position: absolute;
+  right: 0;
+  bottom: 7%;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.selected_chat_hover :hover {
+  background-color: #adadad;
+  color: white;
+}
