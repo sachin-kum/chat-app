@@ -10,6 +10,7 @@ const ChatProvider = ({ children }) => {
   const [chats, setChats] = useState([]);
   const [selectedChat, setSelectedChat] = useState();
   const [fetchAgain, setFetchAgian] = useState(false);
+  const [notification, setNotification] = useState([]);
 
   // useEffect(() => {
   //   let info = localStorage.getItem("userInfo");
@@ -32,6 +33,8 @@ const ChatProvider = ({ children }) => {
         setSelectedChat,
         fetchAgain,
         setFetchAgian,
+        notification,
+        setNotification,
       }}
     >
       {children}

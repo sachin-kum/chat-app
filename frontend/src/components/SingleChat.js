@@ -47,6 +47,8 @@ const SingleChat = () => {
     fetchAgain,
     setFetchAgian,
     chat,
+    notification,
+    setNotification,
   } = ChatState();
 
   const fetchMessages = () => {
@@ -133,10 +135,10 @@ const SingleChat = () => {
         !selectedChatCompare || // if chat is not selected or doesn't match current chat
         selectedChatCompare._id !== newMessageRecieved.chat._id
       ) {
-        // if (!notification.includes(newMessageRecieved)) {
-        //   setNotification([newMessageRecieved, ...notification]);
-        //   setFetchAgain(!fetchAgain);
-        // }
+        if (!notification.includes(newMessageRecieved)) {
+          setNotification([newMessageRecieved, ...notification]);
+          setFetchAgian(!fetchAgain);
+        }
       } else {
         setMessages([...messages, newMessageRecieved]);
       }
@@ -162,7 +164,7 @@ const SingleChat = () => {
       }
     }, timerLength);
   };
-  console.log("home", messages);
+  console.log("home", notification);
 
   return (
     <>

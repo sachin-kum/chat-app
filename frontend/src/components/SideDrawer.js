@@ -32,11 +32,20 @@ import { BaseUrl } from "../BaseUrl";
 import ChatLoading from "./ChatLoading";
 import UserListItem from "./userAvatar/UserListItem";
 import "react-toastify/dist/ReactToastify.css";
+import { getSender } from "../Config/ChatLogics";
 const SideDrawer = () => {
   const navigate = useNavigate();
   const history = createBrowserHistory();
-  const { user, setSelectedChat, chats, setChats, setUser, selectedChat } =
-    ChatState();
+  const {
+    user,
+    setSelectedChat,
+    chats,
+    setChats,
+    setUser,
+    selectedChat,
+    notification,
+    setNotification,
+  } = ChatState();
   const [searchLabel, setSearchLabel] = useState(false);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
@@ -105,9 +114,6 @@ const SideDrawer = () => {
       });
   };
 
-  console.log("chats", chats);
-  console.log("select chats", selectedChat);
-
   return (
     <div>
       <Box
@@ -134,14 +140,27 @@ const SideDrawer = () => {
           <Menu p={1}>
             <MenuButton p={1}>
               <NotificationBadge
-                count={10}
+                count={notification.length}
                 // effect={Effect.SCALE}
               />
               <BellIcon fontSize="2xl" m={1} />
             </MenuButton>
 
             <MenuList pl={2}>
-              <MenuItem>Sachin</MenuItem>
+              {!notification.length && "No New Messages"}
+              {notification.map((notif) => (
+                <MenuItem
+                  key={notif._id}
+                  onClick={() => {
+                    setSelectedChat(notif.chat);
+                    setNotification(notification.filter((n) => n !== notif));
+                  }}
+                >
+                  {notif.chat.isGroupChat
+                    ? `New Message in ${notif.chat.chatName}`
+                    : `New Message from ${getSender(user, notif.chat.users)}`}
+                </MenuItem>
+              ))}
             </MenuList>
           </Menu>
 
